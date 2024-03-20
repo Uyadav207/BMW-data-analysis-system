@@ -4,9 +4,11 @@ const multer = require('multer');
 const csvParser = require('csv-parser');
 const fs = require('fs');
 const { Sequelize, DataTypes } = require('sequelize');
+var cors = require('cors');
 
 // Create Express app
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3001;
 
 // Middleware for handling file uploads
@@ -117,35 +119,53 @@ app.get('/files/:id', async (req, res) => {
     }
   });
 
+  app.get('/files', async (req, res) => {
+    try {
+      // Query the database to retrieve all files
+      const files = await File.findAll();
+  
+      // Send the retrieved files as a response
+      res.json(files);
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      res.status(500).send('Error fetching files.');
+    }
+  });
+
 
  // Endpoint to delete file by ID
 app.delete('/files/:id', async (req, res) => {
-    const fileId = req.params.id;
-  
-    try {
-      const file = await File.findByPk(fileId);
-      if (!file) {
-        return res.status(404).send('File not found.');
-      }
-      // Delete file from the filesystem
-      const filePath = `uploads/${file.filename}`;
-      fs.unlinkSync(filePath);
-  
-      // Delete file from the database
-      await file.destroy();
-  
-      // Check if uploads folder is empty
-      const filesInUploads = fs.readdirSync('uploads');
-      if (filesInUploads.length === 0) {
-        fs.rmdirSync('uploads');
-      }
-  
-      res.send('File deleted successfully.');
-    } catch (error) {
-      console.error('Error deleting file:', error);
-      res.status(500).send('Error deleting file.');
+  const fileId = req.params.id;
+
+  try {
+    const file = await File.findByPk(fileId);
+    if (!file) {
+      return res.status(404).send('File not found.');
     }
-  });
+
+    // Delete file from the filesystem
+    const filePath = `uploads/${file.filename}`;
+    fs.unlinkSync(filePath);
+    console.log(`File deleted from filesystem: ${filePath}`);
+
+    // Delete file from the database
+    await file.destroy();
+    console.log(`File deleted from database: ${file.filename}`);
+
+    // Check if uploads folder is empty
+    const filesInUploads = fs.readdirSync('uploads');
+    if (filesInUploads.length === 0) {
+      fs.rmdirSync('uploads');
+      console.log('Uploads folder deleted as it became empty.');
+    }
+
+    res.send('File deleted successfully.');
+  } catch (error) {
+    console.error('Error deleting file:', error);
+    res.status(500).send('Error deleting file.');
+  }
+});
+
   
   
   
