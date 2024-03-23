@@ -13,15 +13,17 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware for handling file uploads
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname); // Use original filename
-    }
-  });
-  
-  const upload = multer({ storage: storage });
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    // Generate a unique filename
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // PostgreSQL connection configuration
 const sequelize = new Sequelize('mydatabase', 'myuser', 'mypassword', {
@@ -39,6 +41,10 @@ const File = sequelize.define('File', {
     type: DataTypes.JSONB,
     allowNull: false,
   },
+  filePath: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }
 });
 
 // Sync model with database
@@ -62,9 +68,8 @@ app.post('/upload', upload.single('file'), async (req, res) => {
       })
       .on('end', async () => {
         try {
-          const newFile = await File.create({ filename: file.originalname, data: JSON.stringify(data) });
+          const newFile = await File.create({ filename: file.originalname, data: JSON.stringify(data), filePath: file.path });
           res.json(newFile);
-          console.log(newFile);
         } catch (error) {
           console.error('Error saving file to database:', error);
           res.status(500).send('Error saving file to database');
@@ -144,13 +149,34 @@ app.delete('/files/:id', async (req, res) => {
     }
 
     // Delete file from the filesystem
-    const filePath = `uploads/${file.filename}`;
+    const filePath = file.filePath;
     fs.unlinkSync(filePath);
     console.log(`File deleted from filesystem: ${filePath}`);
 
     // Delete file from the database
     await file.destroy();
     console.log(`File deleted from database: ${file.filename}`);
+
+    // // Check if uploads folder is empty
+    // const filesInUploads = fs.readdirSync('uploads');
+    // if (filesInUploads.length === 0) {
+    //   fs.rmdirSync('uploads');
+    //   console.log('Uploads folder deleted as it became empty.');
+    // }
+
+    res.send('File deleted successfully.');
+  } catch (error) {
+    console.error('Error deleting file:', error);
+    res.status(500).send('Error deleting file.');
+  }
+}); 
+
+// Endpoint to delete all files from the database
+app.delete('/files', async (req, res) => {
+  try {
+    // Delete all files from the database
+    await File.destroy({ where: {} });
+    console.log('All files deleted from the database.');
 
     // Check if uploads folder is empty
     const filesInUploads = fs.readdirSync('uploads');
@@ -159,16 +185,12 @@ app.delete('/files/:id', async (req, res) => {
       console.log('Uploads folder deleted as it became empty.');
     }
 
-    res.send('File deleted successfully.');
+    res.send('All files deleted successfully.');
   } catch (error) {
-    console.error('Error deleting file:', error);
-    res.status(500).send('Error deleting file.');
+    console.error('Error deleting files:', error);
+    res.status(500).send('Error deleting files.');
   }
 });
-
-  
-  
-  
 
 // Start server
 app.listen(PORT, () => {

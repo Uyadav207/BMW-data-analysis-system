@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL_UPLOAD } from '../config/BaseUrl';
 
 function FileUpload({ onUpload }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -18,10 +19,9 @@ function FileUpload({ onUpload }) {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post('http://localhost:3001/upload', formData);
-      const fileData = response.data
-      console.log(fileData.data);
-      onUpload(fileData.data);
+      const response = await axios.post(BASE_URL_UPLOAD, formData);
+      const fileData = response.data;
+      onUpload(fileData);
     } catch (error) {
       console.error('Error uploading file:', error);
       alert('Error uploading file. Please try again.');
@@ -29,7 +29,7 @@ function FileUpload({ onUpload }) {
   };
 
   return (
-    <div>
+    <div className='p-10'>
       <input type="file" onChange={handleFileChange} />
       <button onClick={handleUpload}>Upload</button>
     </div>
