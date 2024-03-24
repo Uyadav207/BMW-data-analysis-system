@@ -39,9 +39,9 @@ function DataVisualization({ requestData }) {
             }
         },
         xAxis: {
-            name: 'Cycle_Number', // Set X axis name to the selected axis
+            name: 'Cycle_Number', 
             type: 'category',
-            data: resx, // Use selected X axis data
+            data: resx, 
         },
         yAxis: {
             type: 'value',

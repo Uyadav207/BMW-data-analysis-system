@@ -16,8 +16,8 @@ function App() {
   }, [data]);
 
   return (
-    <div className='max-w-auto'>
-      <h1>Data Analysis Tool</h1>
+    <div className='p-3 rounded-2xl max-w-auto'>
+      <h1 className='my-5'>Data Analysis Tool</h1>
       <FileUpload onUpload={handleFileUpload} />
       <FileList onUpdate={handleFileUpload} />
       {data !== null && <DataVisualization requestData={data} />}

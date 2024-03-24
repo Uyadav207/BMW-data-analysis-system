@@ -2,9 +2,6 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-body {
-  margin: 0;
-}
 
 a {
   font-weight: 500;
@@ -16,9 +13,9 @@ a:hover {
 }
 
 body {
-  margin: 100px;
   place-items: center;
   min-height: 100vh;
+  background-color: #fff;
 }
 
 h1 {
