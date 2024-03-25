@@ -75,6 +75,20 @@ DB_PASSWORD=your_database_password
 7. Set Range for visualising data for particular data ranges over x axis.
 8. Filter data to be visualised: Select and Deselect Parameters to be visualised
 
+## Benchmarks
+
+Small File Size: 1000 - 1200 rows
+
+<img src="https://github.com/Uyadav207/Data-analysis-system/blob/main/benchmark_small_File.png" alt="screenshot" ></img>
+
+Medium file: 10000 - 20000 rows
+
+<img src="https://github.com/Uyadav207/Data-analysis-system/blob/main/Benchmark3mb.png" alt="screenshot" ></img>
+
+Larger File with 2000000 rows
+
+<img src="https://github.com/Uyadav207/Data-analysis-system/blob/main/Benchmark_10mb.png" alt="screenshot" ></img>
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
