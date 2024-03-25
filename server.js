@@ -10,7 +10,7 @@ var cors = require('cors');
 // Create Express app
 const app = express();
 app.use(cors());
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT
 
 // Middleware for handling file uploads
 const storage = multer.diskStorage({
@@ -26,8 +26,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// PostgreSQL connection configuration
-const sequelize = new Sequelize('mydatabase', 'myuser', 'mypassword', {
+const user = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
+
+const sequelize = new Sequelize('mydatabase', user, password, {
   host: 'localhost',
   dialect: 'postgres',
 });
@@ -111,22 +113,6 @@ app.get('/files/:id', async (req, res) => {
   }
 });
 
-// Endpoint to get file by ID
-app.get('/files/:id/download', async (req, res) => {
-  const fileId = req.params.id;
-
-  try {
-    const file = await File.findByPk(fileId);
-    if (!file) {
-      return res.status(404).send('File not found.');
-    }
-    const filePath = `uploads/${file.filename}`;
-    res.download(filePath);
-  } catch (error) {
-    console.error('Error fetching file:', error);
-    res.status(500).send('Error fetching file.');
-  }
-});
 
 app.get('/files', async (req, res) => {
   try {

@@ -17,7 +17,7 @@ function App() {
   };
 
   return (
-    <div className='bg-gray-50 p-3 rounded-2xl max-w-auto'>
+    <div className='p-3 rounded-2xl max-w-auto'>
       <h1 className='my-5'>Data Analysis Tool</h1>
       <FileUpload onUpload={handleFileUpload} />
       <FileList onUpdate={handleFileUpload} onUpdateDelete={handleDelete}/>
