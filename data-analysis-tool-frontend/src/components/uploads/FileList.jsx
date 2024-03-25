@@ -32,29 +32,27 @@ const FileList = ({ onUpdate }) => {
 
     // Handle visualization of data for a file
     const visualizeData = (file) => {
+        console.log(file);
         onUpdate(file);
     };
 
     return (
-        <div className="container mx-auto p-10">
-            {/* {  loading ? <h2 className="text-2xl font-bold mb-4">Uploads</h2> : null} */}
-            <div className="px-2">
-                <div className="flex -mx-2">
-                    {files.map(file => (
-                        <div key={file.id} className="relative inline-block">
-                            <button
-                                className="text-white-700 text-center py-2 m-2"
-                                onClick={() => visualizeData(file)}
-                            >
-                                {file.filename}
-                            </button>
-                            <CancelIcon
-                                className="absolute top-0 right-0 cursor-pointer"
-                                onClick={() => deleteFile(file.id)}
-                            />
-                        </div>
-                    ))}
-                </div>
+        <div className="mx-auto p-10 max-w-screen-lg">
+            <div className="flex flex-wrap -mx-2">
+                {files.map(file => (
+                    <div key={file.id} className="relative inline-block p-2">
+                        <button
+                            className="text-white-700 text-center w-full"
+                            onClick={() => visualizeData(file)}
+                        >
+                            {file.filename}
+                        </button>
+                        <CancelIcon
+                            className="absolute top-0 right-0 cursor-pointer"
+                            onClick={() => deleteFile(file.id)}
+                        />
+                    </div>
+                ))}
             </div>
         </div>
     );

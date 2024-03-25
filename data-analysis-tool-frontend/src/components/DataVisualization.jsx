@@ -3,6 +3,7 @@ import ReactECharts from 'echarts-for-react';
 
 function DataVisualization({ requestData }) {
     // Parse the data string into an array of objects
+    // console.log(requestData);
     const data = JSON.parse(requestData.data);
 
     if (!data || data.length === 0) {
@@ -19,7 +20,7 @@ function DataVisualization({ requestData }) {
         data: data.map((item) => item[key]),
       }));
 
-
+    console.log("seriesData", seriesData.length);
     // ECharts options
     const options = {
         title: {
@@ -84,7 +85,8 @@ function DataVisualization({ requestData }) {
 
     return (
         <div  className='border p-5'>
-            <ReactECharts option={options} />
+            <ReactECharts  notMerge={true}
+  lazyUpdate={true} option={options} />
             <div className='flex justify-center p-10'>
                 <div className="p-1">
                     <select className='p-2' value={selectedPlotType} onChange={(e) => handlePlotTypeChange(e.target.value)}>

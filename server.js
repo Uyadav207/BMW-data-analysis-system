@@ -1,7 +1,8 @@
 // Import necessary modules
 const express = require('express');
 const multer = require('multer');
-const csvParser = require('csv-parser');
+// const csvParser = require('csv-parser');
+const fastcsv = require('fast-csv');
 const fs = require('fs');
 const { Sequelize, DataTypes } = require('sequelize');
 var cors = require('cors');
@@ -50,6 +51,8 @@ const File = sequelize.define('File', {
 // Sync model with database
 sequelize.sync();
 
+const CHUNK_SIZE = 2 * 1024 * 1024;
+
 // Endpoint for uploading CSV files
 app.post('/upload', upload.single('file'), async (req, res) => {
   const file = req.file;
@@ -61,9 +64,11 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   const data = [];
 
   try {
-    const fileStream = fs.createReadStream(filePath);
-    fileStream.pipe(csvParser())
+    const fileStream = fs.createReadStream(filePath, { highWaterMark: CHUNK_SIZE });
+    fastcsv.parseStream(fileStream, {headers: true, encoding: 'utf8'})
+     // fileStream.pipe(csvParser())
       .on('data', (row) => {
+        console.log(row);
         data.push(row);
       })
       .on('end', async () => {

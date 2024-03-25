@@ -9,6 +9,7 @@ function App() {
 
   const handleFileUpload = (fileData) => {
     // Set the parsed data received from the backend
+    console.log(fileData);
     setData(fileData);
   };
 
@@ -16,7 +17,7 @@ function App() {
   }, [data]);
 
   return (
-    <div className='p-3 rounded-2xl max-w-auto'>
+    <div className='bg-gray-50 p-3 rounded-2xl max-w-auto'>
       <h1 className='my-5'>Data Analysis Tool</h1>
       <FileUpload onUpload={handleFileUpload} />
       <FileList onUpdate={handleFileUpload} />
