@@ -66,7 +66,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const fileStream = fs.createReadStream(filePath, { highWaterMark: CHUNK_SIZE });
     fastcsv.parseStream(fileStream, {headers: true, encoding: 'utf8'})
-     // fileStream.pipe(csvParser())
       .on('data', (row) => {
         console.log(row);
         data.push(row);

@@ -19,8 +19,6 @@ function DataVisualization({ requestData }) {
         type: selectedPlotType,
         data: data.map((item) => item[key]),
       }));
-
-    console.log("seriesData", seriesData.length);
     // ECharts options
     const options = {
         title: {

@@ -7,20 +7,20 @@ import FileList from './components/uploads/FileList';
 function App() {
   const [data, setData] = useState(null);
 
+  const handleDelete = (files) => {
+    if (files.length === 0) setData(null);
+  }
+
   const handleFileUpload = (fileData) => {
     // Set the parsed data received from the backend
-    console.log(fileData);
     setData(fileData);
   };
-
-  useEffect(() => {
-  }, [data]);
 
   return (
     <div className='bg-gray-50 p-3 rounded-2xl max-w-auto'>
       <h1 className='my-5'>Data Analysis Tool</h1>
       <FileUpload onUpload={handleFileUpload} />
-      <FileList onUpdate={handleFileUpload} />
+      <FileList onUpdate={handleFileUpload} onUpdateDelete={handleDelete}/>
       {data !== null && <DataVisualization requestData={data} />}
     </div>
   );
