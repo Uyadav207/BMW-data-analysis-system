@@ -64,14 +64,16 @@ DB_PASSWORD=your_database_password
 - Axios: Promise-based HTTP client for making API requests.
 - Material-UI: React component library for building UIs.
 
-## Usage
+## Usage and features
 
 1. Upload CSV files using the frontend interface.
 2. Visualize data using interactive charts and graphs.
 3. Manipulate visualization parameters such as chart type, colors, and axis labels.
-4. Download visualized plots.
-5. Explore details within plots by zooming in and out.
-6. Filter data to be visualised.
+4. Restore Visulaised plots to initial render i.e reset
+5. Download visualized plots.
+6. Explore details within plots by zooming in and out.
+7. Set Range for visualising data for particular data ranges over x axis.
+8. Filter data to be visualised: Select and Deselect Parameters to be visualised
 
 ## License
 
