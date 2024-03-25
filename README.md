@@ -20,7 +20,7 @@ The tool is built using React JS (Vite) for the front end and Node.js for the ba
 ### Backend Setup
 
 1. Install Node.js if not already installed: [Node.js Installation Guide](https://nodejs.org/en/download/).
-2. Clone the repository: `git clone https://github.com/Uyadav207/BMW-data-analysis-system.git`
+2. Clone the repository: `git clone https://github.com/Uyadav207/Data-analysis-system.git`
 3. Navigate to the backend directory: `cd bmw-data-analysis-system`
 4. Install dependencies: `npm install`
 5. Set up PostgreSQL database: [PostgreSQL Installation Guide](https://www.postgresql.org/download/)
