@@ -8,6 +8,10 @@ The tool is built using React JS (Vite) for the front end and Node.js for the ba
 
 <img src="https://github.com/Uyadav207/BMW-data-analysis-system/blob/main/Data-analysis-tool.png" alt="screenshot" ></img>
 
+## Demo Video
+
+[Watch The Demo Video](https://drive.google.com/file/d/1Mze6O2mjWeSiPV2U6hzxChCqzXW30gXZ/view?usp=drive_link)
+
 ## Features
 
 - Quick project setup and build optimizations using React JS (Vite) for the frontend.
