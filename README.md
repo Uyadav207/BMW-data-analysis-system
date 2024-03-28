@@ -6,7 +6,7 @@ This project is a robust data analysis tool designed to efficiently visualize pl
 
 The tool is built using React JS (Vite) for the front end and Node.js for the backend. It allows users to upload CSV files, parse and process the data, and visualize it using ECharts for React. The backend is responsible for handling file uploads, parsing CSV files, and storing data in a PostgreSQL database. The frontend provides an interface for users to interact with the data, select files for visualization, and manipulate visualization parameters.
 
-<img src="https://github.com/Uyadav207/BMW-data-analysis-system/blob/main/Data-analysis-tool.png" alt="screenshot" ></img>
+<img src="https://github.com/Uyadav207/BMW-data-analysis-system/blob/main/Benchmarks/Data-analysis-tool.png" alt="screenshot" ></img>
 
 ## Demo Video
 
