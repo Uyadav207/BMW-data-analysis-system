@@ -2,31 +2,25 @@ import React, { useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 
 function DataVisualization({ requestData }) {
-    // Parse the data string into an array of objects
+
+    const [loading, setLoading] = useState(true);
     const data = JSON.parse(requestData.data);
 
-    // If no data is available, render a message
     if (!data || data.length === 0) {
         return <div>No data available</div>;
     }
 
-    // Extract keys from each object in the data array
     const keys = Object.keys(data[0]);
-
-    // Extract x-axis data
     const xAxisData = data.map(item => item[keys[0]]);
+    console.log(keys)
+    const [selectedPlotType, setSelectedPlotType] = useState('line');
 
-    // State for selected plot type
-    const [selectedPlotType, setSelectedPlotType] = useState('line'); // Default plot type
-
-    // Prepare series data for plotting
     const seriesData = keys.slice(1).map((key) => ({
         name: key,
         type: selectedPlotType,
         data: data.map((item) => item[key]),
     }));
 
-    // ECharts options
     const options = {
         title: {
             text: requestData.filename,
@@ -41,13 +35,20 @@ function DataVisualization({ requestData }) {
         toolbox: {
             feature: {
                 restore: {},
-                saveAsImage: { name: requestData.filename } // Save chart with filename
+                saveAsImage: { name: requestData.filename }
             }
         },
         xAxis: {
-            name: 'Cycle_Number',
+            name: keys[0],
             type: 'category',
             data: xAxisData,
+            axisLabel: {
+                interval: Math.ceil(xAxisData.length / 20), // Limit number of labels
+                // formatter: function (value, index) {
+                //     // Only display label for every 20th data point
+                //     return index % 20 === 0 ? value : '';
+                // }
+            }
         },
         yAxis: {
             type: 'value',
@@ -65,35 +66,36 @@ function DataVisualization({ requestData }) {
             }
         },
         legend: {
-            left: 10
+            left: 10,
+            selected: {},
         },
         dataZoom: [
             {
                 show: true,
                 realtime: true,
-                start: 65,
-                end: 85
+                start: 0,
+                end: 4
             },
             {
                 type: 'inside',
                 realtime: true,
-                start: 65,
-                end: 85
+                start: 0,
+                end: 4
             }
         ]
     };
 
-    // Event handler for changing plot type
     const handlePlotTypeChange = (value) => {
         setSelectedPlotType(value);
     };
 
+    const handleChartReady = () => {
+        setLoading(false); // Set loading to false once chart is rendered
+    };
+
     return (
         <div className='border p-5'>
-            {/* Render ECharts component */}
-            <ReactECharts notMerge={true} lazyUpdate={true} option={options} />
-
-            {/* Dropdown for selecting plot type */}
+            <ReactECharts option={options} lazyUpdate={true} notMerge={true} onChartReady={handleChartReady} showLoading={loading} />
             <div className='flex justify-center p-10'>
                 <div className="p-1">
                     <select className='p-2' value={selectedPlotType} onChange={(e) => handlePlotTypeChange(e.target.value)}>
