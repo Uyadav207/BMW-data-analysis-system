@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(compression());
-const PORT = process.env.NODE_DOCKER_PORT;
+const PORT = 3000;
 
 app.use('/upload', uploadController);
 app.use('/files', fileController);
