@@ -12,7 +12,6 @@ function DataVisualization({ requestData }) {
 
     const keys = Object.keys(data[0]);
     const xAxisData = data.map(item => item[keys[0]]);
-    console.log(keys)
     const [selectedPlotType, setSelectedPlotType] = useState('line');
 
     const seriesData = keys.slice(1).map((key) => ({

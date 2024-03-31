@@ -3,11 +3,13 @@ const cors = require('cors');
 const compression = require('compression');
 const uploadController = require('./controllers/uploadController');
 const fileController = require('./controllers/fileController');
+const dotenv = require("dotenv")
+dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(compression());
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.NODE_DOCKER_PORT;
 
 app.use('/upload', uploadController);
 app.use('/files', fileController);

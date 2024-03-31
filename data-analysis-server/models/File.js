@@ -1,8 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
+const  { DB, USER, HOST, PASSWORD, port, dialect } = require('../config');
 
-const sequelize = new Sequelize('mydatabase', 'myuser', 'mypassword', {
-  host: 'localhost',
-  dialect: 'postgres',
+const sequelize = new Sequelize(DB, USER, PASSWORD, {
+  host: HOST,
+  dialect: dialect,
+  port: port
 });
 
 const File = sequelize.define('File', {
