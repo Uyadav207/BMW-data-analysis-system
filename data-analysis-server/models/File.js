@@ -5,7 +5,7 @@ const { DB, USER, PASSWORD, port, dialect } = require('../config');
 const sequelize = new Sequelize(DB, USER, PASSWORD, {
   host: "postgresdb",
   port: port,
-  dialect: dialect,
+  dialect: "postgres",
 });
 
 // Test database connection
