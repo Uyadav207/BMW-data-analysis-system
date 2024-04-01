@@ -21,30 +21,16 @@ The tool is built using React JS (Vite) for the front end and Node.js for the ba
 
 ## Setup Instructions
 
-### Backend Setup
-
 1. Install Node.js if not already installed: [Node.js Installation Guide](https://nodejs.org/en/download/).
 2. Clone the repository: `git clone https://github.com/Uyadav207/Data-analysis-system.git`
-3. Navigate to the backend directory: `cd bmw-data-analysis-system`
-4. Install dependencies: `npm install`
-5. Set up PostgreSQL database: [PostgreSQL Installation Guide](https://www.postgresql.org/download/)
-6. Create a `.env` file in the backend directory and set the following environment variables:
+3. Make sure Docker and docker desktop is installed on your system.
+4. cd `Data-analysis-system`
+5. `docker-compose up --build` to start the application container
+6. Application will be started on `localhost:5173`
+7. To remove the container `docker-compose down`
 
+> Potential Bug:  Postgres image may be buggy for the current version, please make sure to compose using command `docker-compose up --build` unless database sucessfully contected.
 
-```
-DB_NAME=your_database_name
-DB_USER=your_database_user
-DB_PASSWORD=your_database_password
-```
-
-7. Run the backend server: `nodemon` : Update Nodemon latestversion
-
-### Frontend Setup
-
-1. Navigate to the frontend directory: `cd data-analysis-tool-frontend`
-2. Install dependencies: `npm install` or `yarn`
-> Note:  Using vite.js for build optimisation
-4. Run the frontend server: `npm run dev`
 
 ## Dependencies
 
